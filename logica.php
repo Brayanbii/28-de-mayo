@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $insertedId = $resultado->getInsertedId();
         
-        header("Location: index.php?status=success&id=" . urlencode($insertedId));
+        // REDIRECCIÓN A LA NUEVA PÁGINA
+        header("Location: dashboard.php?status=success");
         exit();
 
     } catch (Exception $e) {
