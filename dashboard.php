@@ -26,231 +26,53 @@ try {
     <title>🎬 Cine & Cookies | Cartelera</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <!-- Fuentes divertidas y estéticas -->
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600;800&family=Righteous&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --cinema-red: #e50914;
-            --cinema-dark: #2b0a11;
-            --gold: #ffc107;
-            --cookie-cream: #fdf6e3;
-            --cookie-brown: #8b4513;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--cinema-dark) 0%, #1a060a 100%);
-            color: var(--cookie-cream);
-            font-family: 'Nunito', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        /* Canvas de fondo para las galletas y palomitas flotantes */
-        #magic-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Botón estilo Ticket VIP */
-        .btn-ticket {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: linear-gradient(to bottom, #ffd700, #daa520);
-            color: #4a3000;
-            text-decoration: none;
-            font-family: 'Righteous', cursive;
-            font-size: 1.1rem;
-            padding: 10px 25px;
-            border-radius: 8px;
-            border: 2px dashed #8b6508;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 10;
-        }
-
-        .btn-ticket:hover {
-            transform: scale(1.05) rotate(-2deg);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
-            color: #000;
-        }
-
-        /* Contenedor Principal: Marquesina de Cine */
-        .marquee-container {
-            background: var(--cookie-cream);
-            border: 12px solid var(--cinema-red);
-            border-radius: 25px;
-            padding: 2.5rem;
-            box-shadow: 
-                0 0 0 8px var(--cinema-dark),
-                0 15px 35px rgba(0,0,0,0.5),
-                inset 0 0 20px rgba(0,0,0,0.1);
-            margin-top: 3rem;
-            position: relative;
-            z-index: 2;
-            color: var(--cinema-dark);
-        }
-
-        /* Luces de la marquesina */
-        .marquee-container::before {
-            content: '';
-            position: absolute;
-            top: -6px; left: -6px; right: -6px; bottom: -6px;
-            border: 6px dotted var(--gold);
-            border-radius: 20px;
-            pointer-events: none;
-            animation: blink-lights 1.5s infinite alternate;
-        }
-
-        /* Títulos */
-        .title-cine {
-            font-family: 'Lobster', cursive;
-            font-size: 4.5rem;
-            color: var(--cinema-red);
-            text-shadow: 3px 3px 0 var(--gold), 6px 6px 0 rgba(0,0,0,0.1);
-            margin-bottom: 0;
-            line-height: 1.2;
-            animation: float-title 3s ease-in-out infinite;
-        }
-
-        .subtitle-cookie {
-            font-family: 'Righteous', cursive;
-            font-size: 1.5rem;
-            color: var(--cookie-brown);
-            letter-spacing: 2px;
-        }
-
-        /* Estilo de Cinta de Película para las filas */
-        .film-strip {
-            background: #111;
-            color: #fff;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1.2rem;
-            position: relative;
-            border-left: 15px dotted #fff;
-            border-right: 15px dotted #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            animation: popIn 0.6s forwards;
-            display: flex;
-            align-items: center;
-        }
-
-        .film-strip:hover {
-            transform: translateY(-5px) scale(1.02) !important;
-            box-shadow: 0 15px 25px rgba(0,0,0,0.3);
-            border-left-color: var(--gold);
-            border-right-color: var(--gold);
-        }
-
-        .film-strip::before {
-            content: '★';
-            position: absolute;
-            left: -35px;
-            color: var(--gold);
-            font-size: 1.5rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .film-strip:hover::before {
-            opacity: 1;
-        }
-
-        .film-data-title {
-            font-family: 'Righteous', cursive;
-            color: var(--gold);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 3px;
-        }
-
-        .film-data-value {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .actor-name {
-            font-family: 'Righteous', cursive;
-            font-size: 1.4rem;
-            color: #fff;
-            margin-bottom: 0;
-        }
-
-        /* Alertas adorables */
-        .alert-popcorn {
-            background: #fff3cd;
-            border: 2px dashed #ffeeba;
-            color: #856404;
-            border-radius: 15px;
-            font-weight: bold;
-            font-family: 'Nunito', sans-serif;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .alert-burnt {
-            background: #f8d7da;
-            border: 2px dashed #f5c6cb;
-            color: #721c24;
-            border-radius: 15px;
-            font-weight: bold;
-        }
-
-        /* Animaciones */
-        @keyframes blink-lights {
-            0% { border-color: var(--gold); opacity: 1; filter: drop-shadow(0 0 5px var(--gold)); }
-            100% { border-color: #ff9800; opacity: 0.6; filter: drop-shadow(0 0 0px transparent); }
-        }
-
-        @keyframes float-title {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(1deg); }
-        }
-
-        @keyframes popIn {
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* Cabecera de la tabla virtual */
-        .cinema-header {
-            color: var(--cookie-brown);
-            font-family: 'Righteous', cursive;
-            border-bottom: 3px solid var(--cinema-red);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
+        :root { --cinema-red: #e50914; --cinema-dark: #2b0a11; --gold: #ffc107; --cookie-cream: #fdf6e3; --cookie-brown: #8b4513; }
+        body { background: linear-gradient(135deg, var(--cinema-dark) 0%, #1a060a 100%); color: var(--cookie-cream); font-family: 'Nunito', sans-serif; overflow-x: hidden; min-height: 100vh; position: relative; }
+        #magic-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
         
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            animation: pulse 2s infinite alternate;
-        }
+        .btn-ticket { position: absolute; top: 20px; left: 20px; background: linear-gradient(to bottom, #ffd700, #daa520); color: #4a3000; text-decoration: none; font-family: 'Righteous', cursive; font-size: 1.1rem; padding: 10px 25px; border-radius: 8px; border: 2px dashed #8b6508; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); transition: all 0.3s; z-index: 10; }
+        .btn-ticket:hover { transform: scale(1.05) rotate(-2deg); box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5); color: #000; }
         
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.05); }
-        }
+        /* Nuevo botón de soporte flotante a la derecha */
+        .btn-soporte { position: absolute; top: 20px; right: 20px; background: linear-gradient(to bottom, #dc3545, #a71d2a); color: #fff; text-decoration: none; font-family: 'Righteous', cursive; font-size: 1.1rem; padding: 10px 20px; border-radius: 8px; border: 2px dashed #ffb3b9; box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3); transition: all 0.3s; z-index: 10; }
+        .btn-soporte:hover { transform: scale(1.05) rotate(2deg); box-shadow: 0 8px 20px rgba(220, 53, 69, 0.5); color: #fff; }
+
+        .marquee-container { background: var(--cookie-cream); border: 12px solid var(--cinema-red); border-radius: 25px; padding: 2.5rem; box-shadow: 0 0 0 8px var(--cinema-dark), 0 15px 35px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.1); margin-top: 3rem; position: relative; z-index: 2; color: var(--cinema-dark); }
+        .marquee-container::before { content: ''; position: absolute; top: -6px; left: -6px; right: -6px; bottom: -6px; border: 6px dotted var(--gold); border-radius: 20px; pointer-events: none; animation: blink-lights 1.5s infinite alternate; }
+        .title-cine { font-family: 'Lobster', cursive; font-size: 4.5rem; color: var(--cinema-red); text-shadow: 3px 3px 0 var(--gold), 6px 6px 0 rgba(0,0,0,0.1); margin-bottom: 0; line-height: 1.2; animation: float-title 3s ease-in-out infinite; }
+        .subtitle-cookie { font-family: 'Righteous', cursive; font-size: 1.5rem; color: var(--cookie-brown); letter-spacing: 2px; }
+        .film-strip { background: #111; color: #fff; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.2rem; position: relative; border-left: 15px dotted #fff; border-right: 15px dotted #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); opacity: 0; transform: translateY(30px) scale(0.95); animation: popIn 0.6s forwards; display: flex; align-items: center; }
+        .film-strip:hover { transform: translateY(-5px) scale(1.02) !important; box-shadow: 0 15px 25px rgba(0,0,0,0.3); border-left-color: var(--gold); border-right-color: var(--gold); }
+        .film-strip::before { content: '★'; position: absolute; left: -35px; color: var(--gold); font-size: 1.5rem; opacity: 0; transition: opacity 0.3s; }
+        .film-strip:hover::before { opacity: 1; }
+        .film-data-title { font-family: 'Righteous', cursive; color: var(--gold); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+        .film-data-value { font-size: 1.1rem; font-weight: 600; }
+        .actor-name { font-family: 'Righteous', cursive; font-size: 1.4rem; color: #fff; margin-bottom: 0; }
+        .alert-popcorn { background: #fff3cd; border: 2px dashed #ffeeba; color: #856404; border-radius: 15px; font-weight: bold; font-family: 'Nunito', sans-serif; }
+        .alert-burnt { background: #f8d7da; border: 2px dashed #f5c6cb; color: #721c24; border-radius: 15px; font-weight: bold; }
+        
+        @keyframes blink-lights { 0% { border-color: var(--gold); opacity: 1; filter: drop-shadow(0 0 5px var(--gold)); } 100% { border-color: #ff9800; opacity: 0.6; filter: drop-shadow(0 0 0px transparent); } }
+        @keyframes float-title { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(1deg); } }
+        @keyframes popIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+        .cinema-header { color: var(--cookie-brown); font-family: 'Righteous', cursive; border-bottom: 3px solid var(--cinema-red); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.1rem; }
+        .empty-state { text-align: center; padding: 4rem 2rem; animation: pulse 2s infinite alternate; }
+        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
     </style>
 </head>
 <body>
 
-    <!-- Canvas para las animaciones súper cookies -->
     <canvas id="magic-canvas"></canvas>
 
     <a href="index.php" class="btn-ticket">
         <i class="bi bi-ticket-perforated-fill me-2"></i> TAQUILLA
+    </a>
+    
+    <!-- Botón de soporte -->
+    <a href="soporte.php" class="btn-soporte">
+        <i class="bi bi-tools me-2"></i> SOPORTE
     </a>
 
     <div class="container pb-5" style="padding-top: 5rem;">
@@ -275,7 +97,6 @@ try {
         <?php else: ?>
             
             <div class="marquee-container">
-                
                 <div class="row cinema-header d-none d-md-flex">
                     <div class="col-3"><i class="bi bi-person-star"></i> Protagonista</div>
                     <div class="col-2"><i class="bi bi-palette"></i> Tono</div>
@@ -336,81 +157,44 @@ try {
         <?php endif; ?>
     </div>
 
-    <!-- Script para la lluvia mágica de emojis -->
     <script>
         const canvas = document.getElementById('magic-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
-
-        // Emojis temáticos
         const emojis = ['🍪', '🍿', '🎬', '✨', '🎟️', '⭐'];
 
         function init() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight;
             particles = [];
-            const particleCount = window.innerWidth < 768 ? 20 : 40; // Menos partículas en móviles
-            
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new EmojiParticle());
-            }
+            for (let i = 0; i < 20; i++) particles.push(new EmojiParticle());
         }
 
         class EmojiParticle {
-            constructor() {
-                this.reset();
-                this.y = Math.random() * height; // Distribuir al inicio
-            }
-            
+            constructor() { this.reset(); this.y = Math.random() * height; }
             reset() {
-                this.x = Math.random() * width;
-                this.y = height + Math.random() * 100;
-                this.size = Math.random() * 20 + 15; // Tamaño entre 15 y 35
-                this.speed = Math.random() * 1.5 + 0.5; // Velocidad de subida
-                this.sway = Math.random() * 2 - 1; // Movimiento lateral
-                this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
-                this.rotation = Math.random() * 360;
-                this.rotSpeed = (Math.random() - 0.5) * 2;
+                this.x = Math.random() * width; this.y = height + Math.random() * 100;
+                this.size = Math.random() * 20 + 15; this.speed = Math.random() * 1.5 + 0.5;
+                this.sway = Math.random() * 2 - 1; this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                this.rotation = Math.random() * 360; this.rotSpeed = (Math.random() - 0.5) * 2;
             }
-
             update() {
-                this.y -= this.speed;
-                this.x += Math.sin(this.y / 50) * this.sway;
-                this.rotation += this.rotSpeed;
-
-                if (this.y < -50) {
-                    this.reset();
-                }
+                this.y -= this.speed; this.x += Math.sin(this.y / 50) * this.sway; this.rotation += this.rotSpeed;
+                if (this.y < -50) this.reset();
             }
-
             draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation * Math.PI / 180);
-                ctx.font = `${this.size}px Arial`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.globalAlpha = 0.6; // Ligeramente transparentes
-                ctx.fillText(this.emoji, 0, 0);
-                ctx.restore();
+                ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.font = `${this.size}px Arial`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                ctx.globalAlpha = 0.6; ctx.fillText(this.emoji, 0, 0); ctx.restore();
             }
         }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
-
-        window.addEventListener('resize', init);
-        init();
-        animate();
+        window.addEventListener('resize', init); init(); animate();
     </script>
 </body>
 </html>
