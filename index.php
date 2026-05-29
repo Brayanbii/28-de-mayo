@@ -1,8 +1,5 @@
 <?php
-// Configuración de la zona horaria colombiana
 date_default_timezone_set('America/Bogota');
-
-// Requerir el cargador de dependencias de Composer
 require 'vendor/autoload.php';
 
 $error_mongo = null;
@@ -96,7 +93,6 @@ try {
             color: var(--stark-cyan);
         }
 
-        /* Contenedores de Cristal Opaco (Glassmorphism Profesional) */
         .glass-panel {
             background: var(--shield-surface);
             border: 1px solid var(--shield-border);
@@ -130,7 +126,6 @@ try {
             color: var(--stark-cyan);
         }
 
-        /* Formulario UI */
         .form-control-tactical {
             background-color: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--shield-border);
@@ -183,7 +178,6 @@ try {
             box-shadow: 0 0 20px var(--stark-cyan-glow);
         }
 
-        /* Tabla de Base de Datos */
         .table-tactical {
             color: var(--text-main);
             margin-bottom: 0;
@@ -231,7 +225,6 @@ try {
             padding: 0.4em 0.8em;
         }
 
-        /* Search Bar */
         .search-wrapper {
             position: relative;
             padding: 1rem 1.5rem;
@@ -262,7 +255,6 @@ try {
             border-color: var(--stark-cyan);
         }
 
-        /* Alertas de Sistema */
         .sys-alert {
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
@@ -325,7 +317,6 @@ try {
 
         <div class="row g-4">
             
-            <!-- PANEL DE REGISTRO (FORMULARIO) -->
             <div class="col-xl-4 col-lg-5">
                 <div class="glass-panel h-100">
                     <div class="panel-header">
@@ -366,7 +357,6 @@ try {
                 </div>
             </div>
 
-            <!-- PANEL DE BASE DE DATOS (TABLA) -->
             <div class="col-xl-8 col-lg-7">
                 <div class="glass-panel h-100 d-flex flex-column">
                     <div class="panel-header justify-content-between">
