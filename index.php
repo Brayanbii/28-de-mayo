@@ -71,11 +71,11 @@
                     <i class="bi bi-ticket-detailed-fill me-2"></i> OBTENER ENTRADA
                 </button>
 
-                <div class="links-container">
-                    <a href="soporte.php" class="link-bot text-danger">
+                <div class="links-container mt-4 d-flex justify-content-between">
+                    <a href="soporte.php" class="link-bot text-danger" style="text-decoration: none; font-family: 'Righteous', cursive;">
                         <i class="bi bi-tools"></i> Ayuda Técnica
                     </a>
-                    <a href="dashboard.php" class="link-bot">
+                    <a href="dashboard.php" class="link-bot" style="text-decoration: none; font-family: 'Righteous', cursive; color: var(--cookie-brown);">
                         <i class="bi bi-eye"></i> Ver Cartelera
                     </a>
                 </div>
