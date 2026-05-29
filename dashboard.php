@@ -23,272 +23,394 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centro de Comando ATLAS | DB</title>
+    <title>🎬 Cine & Cookies | Cartelera</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fuentes divertidas y estéticas -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600;800&family=Righteous&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --cyan: #00f3ff;
-            --dark-bg: #030712;
-            --panel-bg: rgba(6, 15, 30, 0.7);
+            --cinema-red: #e50914;
+            --cinema-dark: #2b0a11;
+            --gold: #ffc107;
+            --cookie-cream: #fdf6e3;
+            --cookie-brown: #8b4513;
         }
 
         body {
-            background-color: var(--dark-bg);
-            color: var(--cyan);
-            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, var(--cinema-dark) 0%, #1a060a 100%);
+            color: var(--cookie-cream);
+            font-family: 'Nunito', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
-        }
-
-        /* Fondo Animado Holográfico */
-        .hologram-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: 
-                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            perspective: 1000px;
-        }
-
-        .hologram-bg::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at center, transparent 20%, var(--dark-bg) 90%);
-        }
-
-        /* Botón de Retirada Táctica */
-        .btn-volver {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            color: var(--cyan);
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            border: 1px solid rgba(0, 243, 255, 0.5);
-            padding: 10px 25px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            background: rgba(0, 243, 255, 0.05);
-            backdrop-filter: blur(5px);
-            z-index: 100;
-            overflow: hidden;
-        }
-
-        .btn-volver::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.4), transparent);
-            transition: all 0.5s ease;
-        }
-
-        .btn-volver:hover::before {
-            left: 100%;
-        }
-
-        .btn-volver:hover {
-            background: rgba(0, 243, 255, 0.2);
-            color: #fff;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
-        }
-
-        /* Contenedor Principal Radar */
-        .radar-container {
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            border-radius: 15px;
-            background: var(--panel-bg);
-            backdrop-filter: blur(15px);
-            padding: 2.5rem;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.05), inset 0 0 40px rgba(0, 243, 255, 0.05);
-            margin-top: 2rem;
             position: relative;
-            overflow: hidden;
         }
 
-        /* Línea Láser Escaneando la Data */
-        .radar-container::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 2px;
-            background: var(--cyan);
-            box-shadow: 0 0 15px 3px var(--cyan);
-            opacity: 0.5;
-            animation: laserScan 4s ease-in-out infinite alternate;
+        /* Canvas de fondo para las galletas y palomitas flotantes */
+        #magic-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
             pointer-events: none;
         }
 
-        /* Encabezados de Tabla */
-        .table-header {
-            font-family: 'Orbitron', sans-serif;
-            color: #fff;
-            text-shadow: 0 0 10px var(--cyan);
-            border-bottom: 2px solid rgba(0, 243, 255, 0.4);
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
+        /* Botón estilo Ticket VIP */
+        .btn-ticket {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(to bottom, #ffd700, #daa520);
+            color: #4a3000;
+            text-decoration: none;
+            font-family: 'Righteous', cursive;
+            font-size: 1.1rem;
+            padding: 10px 25px;
+            border-radius: 8px;
+            border: 2px dashed #8b6508;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+        }
+
+        .btn-ticket:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+            color: #000;
+        }
+
+        /* Contenedor Principal: Marquesina de Cine */
+        .marquee-container {
+            background: var(--cookie-cream);
+            border: 12px solid var(--cinema-red);
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 
+                0 0 0 8px var(--cinema-dark),
+                0 15px 35px rgba(0,0,0,0.5),
+                inset 0 0 20px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+            position: relative;
+            z-index: 2;
+            color: var(--cinema-dark);
+        }
+
+        /* Luces de la marquesina */
+        .marquee-container::before {
+            content: '';
+            position: absolute;
+            top: -6px; left: -6px; right: -6px; bottom: -6px;
+            border: 6px dotted var(--gold);
+            border-radius: 20px;
+            pointer-events: none;
+            animation: blink-lights 1.5s infinite alternate;
+        }
+
+        /* Títulos */
+        .title-cine {
+            font-family: 'Lobster', cursive;
+            font-size: 4.5rem;
+            color: var(--cinema-red);
+            text-shadow: 3px 3px 0 var(--gold), 6px 6px 0 rgba(0,0,0,0.1);
+            margin-bottom: 0;
+            line-height: 1.2;
+            animation: float-title 3s ease-in-out infinite;
+        }
+
+        .subtitle-cookie {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: var(--cookie-brown);
             letter-spacing: 2px;
         }
 
-        /* Filas de Datos con Animación de Entrada */
-        .data-row {
-            background: rgba(0, 243, 255, 0.02);
-            border: 1px solid rgba(0, 243, 255, 0.1);
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin-bottom: 0.8rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateX(-20px);
-            animation: slideInRight 0.6s ease forwards;
-        }
-
-        .data-row:hover {
-            background: rgba(0, 243, 255, 0.1);
-            border-color: rgba(0, 243, 255, 0.5);
-            transform: scale(1.01) translateX(5px);
-            box-shadow: -5px 0 15px rgba(0, 243, 255, 0.2);
-            z-index: 2;
-        }
-
-        .data-row .col-fw-bold {
-            font-size: 1.2rem;
+        /* Estilo de Cinta de Película para las filas */
+        .film-strip {
+            background: #111;
             color: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            border-left: 15px dotted #fff;
+            border-right: 15px dotted #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            animation: popIn 0.6s forwards;
+            display: flex;
+            align-items: center;
+        }
+
+        .film-strip:hover {
+            transform: translateY(-5px) scale(1.02) !important;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+            border-left-color: var(--gold);
+            border-right-color: var(--gold);
+        }
+
+        .film-strip::before {
+            content: '★';
+            position: absolute;
+            left: -35px;
+            color: var(--gold);
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .film-strip:hover::before {
+            opacity: 1;
+        }
+
+        .film-data-title {
+            font-family: 'Righteous', cursive;
+            color: var(--gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .film-data-value {
+            font-size: 1.1rem;
             font-weight: 600;
         }
 
-        .data-row .timestamp {
-            font-family: monospace;
-            color: rgba(0, 243, 255, 0.6);
-            background: rgba(0, 0, 0, 0.3);
-            padding: 3px 8px;
-            border-radius: 4px;
-            border: 1px solid rgba(0, 243, 255, 0.2);
-        }
-
-        /* Títulos Globales */
-        .title-hologram {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: transparent;
-            -webkit-text-stroke: 1px var(--cyan);
-            text-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
-            letter-spacing: 8px;
+        .actor-name {
+            font-family: 'Righteous', cursive;
+            font-size: 1.4rem;
+            color: #fff;
             margin-bottom: 0;
-            animation: glowText 3s infinite alternate;
         }
 
-        /* Alertas */
-        .cyber-alert-success {
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid #00ff88;
-            color: #00ff88;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
-            font-family: 'Orbitron', sans-serif;
+        /* Alertas adorables */
+        .alert-popcorn {
+            background: #fff3cd;
+            border: 2px dashed #ffeeba;
+            color: #856404;
+            border-radius: 15px;
+            font-weight: bold;
+            font-family: 'Nunito', sans-serif;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        .cyber-alert-danger {
-            background: rgba(255, 42, 42, 0.1);
-            border: 1px solid #ff2a2a;
-            color: #ff2a2a;
-            box-shadow: 0 0 15px rgba(255, 42, 42, 0.2);
-            font-family: 'Orbitron', sans-serif;
+        .alert-burnt {
+            background: #f8d7da;
+            border: 2px dashed #f5c6cb;
+            color: #721c24;
+            border-radius: 15px;
+            font-weight: bold;
         }
 
-        /* Keyframes */
-        @keyframes slideInRight {
-            to { opacity: 1; transform: translateX(0); }
+        /* Animaciones */
+        @keyframes blink-lights {
+            0% { border-color: var(--gold); opacity: 1; filter: drop-shadow(0 0 5px var(--gold)); }
+            100% { border-color: #ff9800; opacity: 0.6; filter: drop-shadow(0 0 0px transparent); }
         }
-        @keyframes laserScan {
-            0% { top: 0; }
-            100% { top: 100%; }
+
+        @keyframes float-title {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
         }
-        @keyframes glowText {
-            from { text-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
-            to { text-shadow: 0 0 30px rgba(0, 243, 255, 0.8), 0 0 50px rgba(0, 243, 255, 0.4); color: #fff; }
+
+        @keyframes popIn {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Cabecera de la tabla virtual */
+        .cinema-header {
+            color: var(--cookie-brown);
+            font-family: 'Righteous', cursive;
+            border-bottom: 3px solid var(--cinema-red);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            animation: pulse 2s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
         }
     </style>
 </head>
 <body>
 
-    <div class="hologram-bg"></div>
+    <!-- Canvas para las animaciones súper cookies -->
+    <canvas id="magic-canvas"></canvas>
 
-    <a href="index.php" class="btn-volver">
-        <i class="bi bi-broadcast me-2"></i> DESCONECTAR ENLACE
+    <a href="index.php" class="btn-ticket">
+        <i class="bi bi-ticket-perforated-fill me-2"></i> TAQUILLA
     </a>
 
-    <div class="container pb-5" style="padding-top: 6rem;">
-        <div class="text-center mb-5">
-            <h1 class="title-hologram text-uppercase">COMANDO ATLAS</h1>
-            <p class="mt-2" style="font-size: 1.2rem; letter-spacing: 3px; color: rgba(0, 243, 255, 0.7);">
-                <i class="bi bi-database-fill-gear"></i> DATOS SATELITALES SINCRONIZADOS
+    <div class="container pb-5" style="padding-top: 5rem;">
+        
+        <div class="text-center mb-4 position-relative z-2">
+            <h1 class="title-cine">Cine & Cookies</h1>
+            <p class="subtitle-cookie mt-2">
+                <i class="bi bi-stars text-warning"></i> CARTELERA DE ESTRELLAS <i class="bi bi-stars text-warning"></i>
             </p>
         </div>
 
         <?php if(isset($_GET['status']) && $_GET['status'] == 'success'): ?>
-            <div class="alert cyber-alert-success text-center py-3 mb-4 rounded-3 fw-bold">
-                <i class="bi bi-check-circle-fill fs-5 me-2"></i> TRANSMISIÓN COMPLETADA: Nuevo operativo registrado en la red segura.
+            <div class="alert alert-popcorn text-center py-3 mb-4 position-relative z-2">
+                <i class="bi bi-emoji-sunglasses fs-4 me-2"></i> ¡Entrada VIP reservada con éxito! Disfruta la función. 🍿
             </div>
         <?php endif; ?>
 
         <?php if ($error_mongo): ?>
-            <div class="alert cyber-alert-danger text-center py-3 mb-4 rounded-3 fw-bold">
-                <i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i> ERROR DE ENLACE CUÁNTICO: <?= htmlspecialchars($error_mongo) ?>
+            <div class="alert alert-burnt text-center py-3 mb-4 position-relative z-2">
+                <i class="bi bi-fire fs-4 me-2"></i> ¡Se quemaron las palomitas! Error: <?= htmlspecialchars($error_mongo) ?>
             </div>
         <?php else: ?>
-            <div class="radar-container">
-                <div class="row table-header align-items-center text-uppercase">
-                    <div class="col-3"><i class="bi bi-person-bounding-box me-2"></i> Operativo</div>
-                    <div class="col-2"><i class="bi bi-palette-fill me-2"></i> Firma Color</div>
-                    <div class="col-3"><i class="bi bi-box-seam-fill me-2"></i> Suministro</div>
-                    <div class="col-2"><i class="bi bi-film me-2"></i> Clasificación</div>
-                    <div class="col-2"><i class="bi bi-clock-history me-2"></i> Registro (T)</div>
+            
+            <div class="marquee-container">
+                
+                <div class="row cinema-header d-none d-md-flex">
+                    <div class="col-3"><i class="bi bi-person-star"></i> Protagonista</div>
+                    <div class="col-2"><i class="bi bi-palette"></i> Tono</div>
+                    <div class="col-3"><i class="bi bi-cookie"></i> Snack VIP</div>
+                    <div class="col-2"><i class="bi bi-film"></i> Género</div>
+                    <div class="col-2"><i class="bi bi-clock"></i> Función</div>
                 </div>
 
                 <?php 
                 $hay_datos = false;
-                $delay = 0; // Para animación en cascada
+                $delay = 0; 
                 foreach ($documentos as $doc): 
                     $hay_datos = true;
-                    $delay += 0.1; // Incrementa el retraso de animación por fila
+                    $delay += 0.15; 
                 ?>
-                    <div class="row data-row align-items-center" style="animation-delay: <?= $delay ?>s;">
-                        <div class="col-3">
-                            <div class="col-fw-bold text-uppercase"><?= htmlspecialchars($doc['apellidos'] ?? '') ?></div>
-                            <div class="text-white-50" style="font-size: 0.95rem;"><?= htmlspecialchars($doc['nombres'] ?? '') ?></div>
+                    <div class="row film-strip" style="animation-delay: <?= $delay ?>s;">
+                        <div class="col-12 col-md-3 mb-3 mb-md-0">
+                            <div class="film-data-title d-md-none">Protagonista</div>
+                            <h3 class="actor-name"><?= htmlspecialchars($doc['apellidos'] ?? '') ?></h3>
+                            <div class="text-white-50"><?= htmlspecialchars($doc['nombres'] ?? '') ?></div>
                         </div>
-                        <div class="col-2 fw-semibold" style="color: #fff;">
-                            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--cyan); box-shadow: 0 0 10px var(--cyan); margin-right:8px;"></span>
-                            <?= htmlspecialchars($doc['color'] ?? '') ?>
+                        <div class="col-6 col-md-2 mb-2 mb-md-0">
+                            <div class="film-data-title d-md-none">Tono</div>
+                            <div class="film-data-value d-flex align-items-center">
+                                <span style="display:inline-block; width:15px; height:15px; border-radius:50%; background:<?= htmlspecialchars($doc['color'] ?? '#ccc') ?>; border: 2px solid #fff; margin-right:8px; box-shadow: 0 0 8px rgba(255,255,255,0.5);"></span>
+                                <?= htmlspecialchars($doc['color'] ?? '') ?>
+                            </div>
                         </div>
-                        <div class="col-3" style="color: #e2e8f0;">
-                            <?= htmlspecialchars($doc['comida'] ?? '') ?>
+                        <div class="col-6 col-md-3 mb-2 mb-md-0">
+                            <div class="film-data-title d-md-none">Snack VIP</div>
+                            <div class="film-data-value text-warning">
+                                <i class="bi bi-bag-heart-fill me-1"></i> <?= htmlspecialchars($doc['comida'] ?? '') ?>
+                            </div>
                         </div>
-                        <div class="col-2" style="color: #e2e8f0;">
-                            <?= htmlspecialchars($doc['pelicula'] ?? '') ?>
+                        <div class="col-6 col-md-2">
+                            <div class="film-data-title d-md-none">Género</div>
+                            <div class="film-data-value" style="color: #00e5ff;">
+                                <?= htmlspecialchars($doc['pelicula'] ?? '') ?>
+                            </div>
                         </div>
-                        <div class="col-2">
-                            <span class="timestamp"><?= htmlspecialchars($doc['registro'] ?? 'N/A') ?></span>
+                        <div class="col-6 col-md-2 text-md-end">
+                            <div class="film-data-title d-md-none">Función</div>
+                            <span class="badge bg-secondary rounded-pill py-2 px-3 fs-6" style="border: 1px dashed #fff;">
+                                <?= htmlspecialchars($doc['registro'] ?? 'N/A') ?>
+                            </span>
                         </div>
                     </div>
                 <?php endforeach; ?>
 
                 <?php if (!$hay_datos): ?>
-                    <div class="text-center py-5" style="opacity: 0.5; animation: pulse-glow 2s infinite alternate;">
-                        <i class="bi bi-hdd-network" style="font-size: 5rem; text-shadow: 0 0 20px var(--cyan);"></i>
-                        <h3 class="mt-4 font-monospace">> RED VACÍA. ESPERANDO DATOS...</h3>
+                    <div class="empty-state">
+                        <div style="font-size: 4rem;">🍿🎬😴</div>
+                        <h3 class="mt-3" style="font-family: 'Righteous', cursive; color: var(--cinema-dark);">El cine está vacío</h3>
+                        <p class="text-muted">Ve a taquilla y registra la primera estrella.</p>
                     </div>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
     </div>
 
+    <!-- Script para la lluvia mágica de emojis -->
+    <script>
+        const canvas = document.getElementById('magic-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        // Emojis temáticos
+        const emojis = ['🍪', '🍿', '🎬', '✨', '🎟️', '⭐'];
+
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            const particleCount = window.innerWidth < 768 ? 20 : 40; // Menos partículas en móviles
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new EmojiParticle());
+            }
+        }
+
+        class EmojiParticle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * height; // Distribuir al inicio
+            }
+            
+            reset() {
+                this.x = Math.random() * width;
+                this.y = height + Math.random() * 100;
+                this.size = Math.random() * 20 + 15; // Tamaño entre 15 y 35
+                this.speed = Math.random() * 1.5 + 0.5; // Velocidad de subida
+                this.sway = Math.random() * 2 - 1; // Movimiento lateral
+                this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = (Math.random() - 0.5) * 2;
+            }
+
+            update() {
+                this.y -= this.speed;
+                this.x += Math.sin(this.y / 50) * this.sway;
+                this.rotation += this.rotSpeed;
+
+                if (this.y < -50) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.font = `${this.size}px Arial`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.globalAlpha = 0.6; // Ligeramente transparentes
+                ctx.fillText(this.emoji, 0, 0);
+                ctx.restore();
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', init);
+        init();
+        animate();
+    </script>
 </body>
 </html>
