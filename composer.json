@@ -1,6 +1,6 @@
 {
 "require": {
-"mongodb/mongodb": "^1.17.0"
+"mongodb/mongodb": "^1.20.0"
 },
 "config": {
 "platform-check": false
