@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.H.I.E.L.D. | Portal de Ingreso</title>
+    <title>🎬 Taquilla | Cine & Cookies</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fuentes divertidas y estéticas -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600;800&family=Righteous&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --neon-blue: #00f3ff;
-            --deep-blue: #0a1128;
-            --alert-red: #ff2a2a;
+            --cinema-red: #e50914;
+            --cinema-dark: #2b0a11;
+            --gold: #ffc107;
+            --cookie-cream: #fdf6e3;
+            --cookie-brown: #8b4513;
         }
 
         body, html {
@@ -19,20 +23,22 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            background-color: #02040a;
-            color: #e2e8f0;
-            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, var(--cinema-dark) 0%, #1a060a 100%);
+            color: var(--cookie-cream);
+            font-family: 'Nunito', sans-serif;
             overflow: hidden;
+            position: relative;
         }
 
-        /* Canvas para partículas de fondo */
-        #bg-canvas {
+        /* Canvas de fondo */
+        #magic-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .main-container {
@@ -45,248 +51,280 @@
             padding: 20px;
         }
 
-        /* Contenedor Glassmorphism */
-        .login-panel {
-            background: rgba(10, 17, 40, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 243, 255, 0.2);
-            border-radius: 20px;
-            padding: 3.5rem;
-            box-shadow: 0 0 40px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(0, 243, 255, 0.05);
-            max-width: 480px;
+        /* Taquilla (Formulario) */
+        .ticket-booth {
+            background: var(--cookie-cream);
+            border: 10px solid var(--cinema-red);
+            border-radius: 25px;
+            padding: 3rem 2.5rem;
+            box-shadow: 
+                0 0 0 6px var(--cinema-dark),
+                0 20px 40px rgba(0,0,0,0.6),
+                inset 0 0 20px rgba(0,0,0,0.05);
+            max-width: 450px;
             width: 100%;
             transform: translateY(30px);
             opacity: 0;
-            animation: floatUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation: floatUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             position: relative;
-            overflow: hidden;
+            color: var(--cinema-dark);
         }
 
-        /* Efecto de escaneo en el panel */
-        .login-panel::before {
+        /* Luces de la Taquilla */
+        .ticket-booth::before {
             content: '';
             position: absolute;
-            top: -100%;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: linear-gradient(to bottom, rgba(0,243,255,0), rgba(0,243,255,0.1), rgba(0,243,255,0));
-            animation: scanline 6s linear infinite;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border: 5px dotted var(--gold);
+            border-radius: 20px;
             pointer-events: none;
+            animation: blink-lights 1.5s infinite alternate;
         }
 
-        h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-blue);
-            text-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
-            letter-spacing: 4px;
+        /* Decoración superior tipo techo de circo/cine */
+        .ticket-booth::after {
+            content: 'TAQUILLA';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: var(--cinema-dark);
+            font-family: 'Righteous', cursive;
+            padding: 5px 20px;
+            border-radius: 20px;
+            border: 3px solid var(--cinema-red);
+            font-size: 1.2rem;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
         }
 
-        .stark-input {
-            background: rgba(0, 0, 0, 0.6) !important;
-            border: none !important;
-            border-bottom: 2px solid rgba(0, 243, 255, 0.3) !important;
-            color: var(--neon-blue) !important;
+        .title-cine {
+            font-family: 'Lobster', cursive;
+            font-size: 3.5rem;
+            color: var(--cinema-red);
+            text-shadow: 2px 2px 0 var(--gold);
+            text-align: center;
+            line-height: 1.1;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-family: 'Righteous', cursive;
+            text-align: center;
+            color: var(--cookie-brown);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Inputs adorables */
+        .input-cookie {
+            background: #fff !important;
+            border: 2px dashed var(--cookie-brown) !important;
+            color: var(--cinema-dark) !important;
             font-size: 1.1rem;
             padding: 12px 15px;
-            border-radius: 5px 5px 0 0;
-            transition: all 0.4s ease;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
         }
 
-        .stark-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-            font-weight: 400;
+        .input-cookie::placeholder {
+            color: #a88b7d;
+            font-weight: 600;
         }
 
-        .stark-input:focus {
-            background: rgba(0, 243, 255, 0.05) !important;
-            border-bottom: 2px solid var(--neon-blue) !important;
-            box-shadow: 0 10px 20px -10px rgba(0, 243, 255, 0.5) !important;
+        .input-cookie:focus {
+            background: #fff8f0 !important;
+            border-color: var(--cinema-red) !important;
+            border-style: solid !important;
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.2) !important;
             transform: translateY(-2px);
         }
 
-        .btn-shield {
-            background: linear-gradient(45deg, transparent 5%, var(--neon-blue) 5%);
-            color: #000;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            border: none;
+        /* Botón de Comprar Entrada */
+        .btn-ticket {
+            background: linear-gradient(to bottom, #ffd700, #daa520);
+            color: #4a3000;
+            font-family: 'Righteous', cursive;
+            font-size: 1.3rem;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px dashed #8b6508;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            margin-top: 1rem;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
-            margin-top: 1rem;
         }
 
-        .btn-shield::after {
-            content: 'AUTORIZAR INGRESO';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(45deg, transparent 5%, #00c3cc 5%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .btn-shield:hover {
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.8);
-            transform: scale(1.02);
+        .btn-ticket:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
             color: #000;
         }
 
-        .btn-shield:hover::after {
-            opacity: 1;
+        /* Alerta de error quemada */
+        .alert-burnt {
+            background: #f8d7da;
+            border: 2px dashed #f5c6cb;
+            color: #721c24;
+            border-radius: 12px;
+            font-weight: bold;
+            font-family: 'Nunito', sans-serif;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: shake 0.5s;
         }
 
-        .shield-icon {
-            font-size: 4rem;
-            color: var(--neon-blue);
-            filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.6));
-            animation: pulse-glow 2s infinite alternate;
+        /* Enlace al dashboard */
+        .link-cartelera {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--cookie-brown);
+            font-family: 'Righteous', cursive;
+            text-decoration: none;
+            transition: color 0.3s;
         }
 
-        .alert-cyber {
-            background: rgba(255, 42, 42, 0.1);
-            border: 1px solid var(--alert-red);
-            color: var(--alert-red);
-            font-family: 'Orbitron', sans-serif;
-            text-shadow: 0 0 5px rgba(255, 42, 42, 0.5);
-            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        .link-cartelera:hover {
+            color: var(--cinema-red);
+            text-decoration: underline;
         }
 
-        /* Animaciones Keyframes */
+        /* Animaciones */
         @keyframes floatUp {
             to { transform: translateY(0); opacity: 1; }
         }
-        @keyframes scanline {
-            0% { top: -100%; }
-            100% { top: 200%; }
+        @keyframes blink-lights {
+            0% { border-color: var(--gold); opacity: 1; filter: drop-shadow(0 0 5px var(--gold)); }
+            100% { border-color: #ff9800; opacity: 0.5; filter: drop-shadow(0 0 0px transparent); }
         }
-        @keyframes pulse-glow {
-            from { filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.4)); transform: scale(1); }
-            to { filter: drop-shadow(0 0 25px rgba(0, 243, 255, 0.9)); transform: scale(1.05); }
-        }
-        @keyframes float-input {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
         }
     </style>
 </head>
 <body>
     
-    <canvas id="bg-canvas"></canvas>
+    <canvas id="magic-canvas"></canvas>
 
     <div class="main-container">
-        <div class="login-panel">
-            <div class="text-center mb-4">
-                <i class="bi bi-shield-shaded shield-icon"></i>
-                <h2 class="mt-3 text-uppercase fw-bold">Iniciativa Atlas</h2>
-                <p class="text-info opacity-75 fw-semibold" style="letter-spacing: 2px;">REGISTRO DE NUEVO OPERATIVO</p>
-            </div>
+        <div class="ticket-booth">
+            
+            <h1 class="title-cine">Cine & Cookies</h1>
+            <p class="subtitle"><i class="bi bi-stars text-warning"></i> RESERVA TU ASIENTO VIP <i class="bi bi-stars text-warning"></i></p>
             
             <?php if(isset($_GET['status']) && $_GET['status'] == 'error'): ?>
-                <div class="alert alert-cyber text-center small mb-4 py-2">
-                    <i class="bi bi-exclamation-triangle-fill"></i> ANOMALÍA DETECTADA: <br>
+                <div class="alert alert-burnt text-center small mb-4 py-2">
+                    <i class="bi bi-exclamation-octagon-fill fs-5"></i><br>
+                    ¡Ups! Ocurrió un problema:<br>
                     <?= htmlspecialchars($_GET['msg']) ?>
                 </div>
             <?php endif; ?>
 
             <form action="logica.php" method="POST" class="position-relative z-3">
-                <div class="mb-4 input-group-cyber">
-                    <input type="text" required name="apellidos" class="form-control stark-input" placeholder="Apellidos (Ej. Romanoff)">
+                <div class="mb-3">
+                    <input type="text" required name="apellidos" class="form-control input-cookie" placeholder="Apellidos (Ej. Pérez)">
+                </div>
+                <div class="mb-3">
+                    <input type="text" required name="nombres" class="form-control input-cookie" placeholder="Nombres (Ej. Ana)">
+                </div>
+                <div class="mb-3">
+                    <input type="text" required name="color" class="form-control input-cookie" placeholder="Color Favorito (Ej. Rojo, #ff0000)">
+                </div>
+                <div class="mb-3">
+                    <input type="text" required name="comida" class="form-control input-cookie" placeholder="Snack Favorito (Ej. Palomitas dulces)">
                 </div>
                 <div class="mb-4">
-                    <input type="text" required name="nombres" class="form-control stark-input" placeholder="Nombres (Ej. Natasha)">
+                    <input type="text" required name="pelicula" class="form-control input-cookie" placeholder="Género de Película (Ej. Comedia)">
                 </div>
-                <div class="mb-4">
-                    <input type="text" required name="color" class="form-control stark-input" placeholder="Firma de Color">
-                </div>
-                <div class="mb-4">
-                    <input type="text" required name="comida" class="form-control stark-input" placeholder="Suministro / Comida">
-                </div>
-                <div class="mb-5">
-                    <input type="text" required name="pelicula" class="form-control stark-input" placeholder="Clasificación / Género">
-                </div>
-                <button type="submit" class="btn btn-shield w-100 py-3 fs-5">AUTORIZAR INGRESO</button>
+                
+                <button type="submit" class="btn-ticket">
+                    <i class="bi bi-ticket-detailed-fill me-2"></i> OBTENER ENTRADA
+                </button>
+
+                <a href="dashboard.php" class="link-cartelera">
+                    <i class="bi bi-eye me-1"></i> Ver Cartelera Actual
+                </a>
             </form>
         </div>
     </div>
 
-    <!-- Script para partículas interactivas estilo S.H.I.E.L.D -->
+    <!-- Script para la lluvia mágica de emojis (adaptada para el login) -->
     <script>
-        const canvas = document.getElementById('bg-canvas');
+        const canvas = document.getElementById('magic-canvas');
         const ctx = canvas.getContext('2d');
-        let width, height, particles;
+        let width, height;
+        let particles = [];
+
+        // Emojis temáticos
+        const emojis = ['🍪', '🍿', '🎬', '✨', '🎟️', '🍩'];
 
         function init() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 60; i++) {
-                particles.push(new Particle());
+            const particleCount = window.innerWidth < 768 ? 15 : 30; // Menos partículas para no distraer en el login
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new EmojiParticle());
             }
         }
 
-        class Particle {
+        class EmojiParticle {
             constructor() {
-                this.x = Math.random() * width;
+                this.reset();
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 1.5 + 0.5;
             }
+            
+            reset() {
+                this.x = Math.random() * width;
+                this.y = height + Math.random() * 100;
+                this.size = Math.random() * 25 + 15;
+                this.speed = Math.random() * 1.2 + 0.3; // Un poco más lento y suave
+                this.sway = Math.random() * 1.5 - 0.75;
+                this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = (Math.random() - 0.5) * 1.5;
+            }
+
             update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
+                this.y -= this.speed;
+                this.x += Math.sin(this.y / 60) * this.sway;
+                this.rotation += this.rotSpeed;
+
+                if (this.y < -50) {
+                    this.reset();
+                }
             }
+
             draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(0, 243, 255, 0.5)';
-                ctx.fill();
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.font = `${this.size}px Arial`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.globalAlpha = 0.5; // Ligeramente más transparentes para que resalte la taquilla
+                ctx.fillText(this.emoji, 0, 0);
+                ctx.restore();
             }
         }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
             
-            // Dibujar cuadrícula sutil
-            ctx.strokeStyle = 'rgba(0, 243, 255, 0.03)';
-            ctx.lineWidth = 1;
-            for(let i=0; i<width; i+=50) {
-                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, height); ctx.stroke();
-            }
-            for(let i=0; i<height; i+=50) {
-                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(width, i); ctx.stroke();
-            }
-
-            // Conectar partículas
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 120) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(0, 243, 255, ${0.2 - dist/600})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
             requestAnimationFrame(animate);
         }
 
